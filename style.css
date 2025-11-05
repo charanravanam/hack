@@ -1,185 +1,123 @@
 html, body {
   width: 100vw;
-  height: 100vh;
   min-height: 100vh;
-  min-width: 100vw;
   margin: 0;
   padding: 0;
   background: #101820;
-  overflow: hidden;
   font-family: 'Fira Mono', 'Hack', 'IBM Plex Mono', monospace;
+  font-size: 100%; /* For user scaling & accessibility */
 }
 
 #matrix-bg {
   position: fixed;
-  top: 0;
-  left: 0;
   z-index: 0;
   width: 100vw;
   height: 100vh;
-  min-width: 100vw;
-  min-height: 100vh;
 }
 
 .chat-terminal {
   position: fixed;
-  z-index: 2;
-  top: 0;
-  left: 0;
+  top: 0; left: 0;
   width: 100vw;
-  max-width: 100vw;
   height: 100vh;
-  max-height: 100vh;
-  border-radius: 0;
-  padding: 0;
-  margin: 0;
   background: rgba(15, 20, 30, 0.96);
   border: 2px solid #39ff14;
-  box-shadow: none;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: stretch;
 }
 
 header {
-  background: rgba(20, 30, 30, 0.7);
+  padding: 11px 16px;
   color: #39ff14;
-  font-size: 1.35rem;
+  font-size: 1rem;
   font-family: inherit;
-  padding: 24px 34px 16px 34px;
   border-bottom: 2px solid #39ff14;
-  text-shadow: 0 0 6px #39ff14;
-  user-select: none;
+  background: rgba(24,36,32,0.65);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 #stage-label {
-  margin-left: 18px;
+  margin-left: 10px;
   border-radius: 7px;
-  padding: 2px 15px;
+  padding: 2px 13px;
   background: #23281f;
   color: #85ff3a;
   font-size: 1rem;
   border: 1.2px solid #39ff14;
-  letter-spacing: 1px;
 }
 
 .messages {
   flex: 1 1 0%;
-  padding: 24px 38px;
+  padding: 13px 8px;
   overflow-y: auto;
-  color: #50ff30;
-  font-size: 1.12rem;
+  font-size: 1rem;
   word-break: break-word;
-  font-family: inherit;
-  text-shadow: 0 0 4px #14d914bb;
 }
 
-.messages .msg.user {
-  color: #38fcf7;
-  text-shadow: 0 0 10px #38fcf755;
-}
-.messages .msg.bot {
-  color: #39ff14;
-}
+.msg.user { color: #38fcf7; }
+.msg.bot { color: #39ff14; }
 
 form {
   display: flex;
-  padding: 24px 32px;
+  padding: 9px 8px;
   border-top: 2px solid #39ff14;
   background: rgba(16, 24, 32, 0.96);
 }
 
 input#chat-input {
   flex: 1 1 0%;
-  font-size: 1.16rem;
+  font-size: 1.1rem;
   background: #0f191f;
   color: #7cfd39;
   border: 1.6px solid #39ff14;
   outline: none;
-  padding: 15px 18px;
-  border-radius: 14px 0 0 14px;
-  font-family: inherit;
-  caret-color: #39ff14;
-  transition: box-shadow 0.2s;
+  padding: 13px 9px;
+  border-radius: 13px 0 0 13px;
   min-width: 0;
-}
-
-input#chat-input:focus {
-  box-shadow: 0 0 14px #39ff1475 inset;
 }
 
 form button {
   background: #39ff14;
   color: #0e151a;
   border: none;
-  border-radius: 0 14px 14px 0;
+  border-radius: 0 13px 13px 0;
   font-family: inherit;
   font-weight: 700;
-  padding: 15px 28px;
+  padding: 13px 17px;
   font-size: 1.1rem;
-  margin-left: -4px;
+  margin-left: -2px;
   cursor: pointer;
-  transition: background 0.15s, color 0.15s;
-  text-shadow: 0 0 5px #15fd5b;
-}
-
-form button:hover {
-  background: #20dd00;
-  color: #061c12;
 }
 
 ::-webkit-scrollbar {
-  width: 9px;
-  background: #1b232a;
+  width: 7px; background: #1b232a;
 }
 ::-webkit-scrollbar-thumb {
   background: #39ff1460;
   border-radius: 7px;
 }
 
-@media (max-width: 900px) {
+@media (min-width: 700px) {
   .chat-terminal {
-    padding: 0;
-    border-radius: 0;
-    font-size: 1rem;
+    max-width: 480px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 83vh;
+    border-radius: 13px;
   }
-  header, form {
-    padding-left: 12px;
-    padding-right: 12px;
+  header { font-size: 1.2rem; padding: 18px 28px; }
+  .messages { padding: 19px 18px; font-size: 1.07rem; }
+  form { padding: 15px 18px; }
+  input#chat-input {
+    font-size: 1.19rem;
+    padding: 15px 12px;
   }
-  .messages {
-    padding-left: 12px;
-    padding-right: 12px;
-    font-size: 0.98rem;
-  }
-  input#chat-input, form button {
-    font-size: 1rem;
-    padding: 9px 11px;
-  }
-}
-
-@media (max-width: 600px) {
-  .chat-terminal {
-    max-width: 100vw;
-    height: 99vh;
-    min-height: 240px;
-    font-size: 0.96rem;
-  }
-  header, form {
-    font-size: 0.97rem;
-    padding-left: 5px;
-    padding-right: 5px;
-    padding-top: 9px;
-    padding-bottom: 9px;
-  }
-  .messages {
-    padding-left: 6px;
-    padding-right: 6px;
-    font-size: 0.91rem;
-  }
-  input#chat-input, form button {
-    font-size: 0.88rem;
-    padding: 7px 7px;
+  form button {
+    font-size: 1.15rem;
+    padding: 15px 24px;
   }
 }
