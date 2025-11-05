@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hacker Gemini Chat</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="matrix-bg"></canvas>
+  <div class="chat-terminal">
+    <header>
+      <h1>root@hustle:/GEMINI_CHAT#</h1>
+      <span id="stage-label">stranger</span>
+    </header>
+    <div class="messages" id="chat-messages"></div>
+    <form id="chat-form" autocomplete="off">
+      <input type="text" id="chat-input" placeholder="> Say anything..." autocomplete="off"/>
+      <button type="submit">Send</button>
+    </form>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
