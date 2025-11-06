@@ -16,6 +16,13 @@
 </head>
 
 <body>
+    <script>
+  // Must run before any sensitive content is rendered!
+  if (!localStorage.getItem('hasAccess')) {
+    window.location.replace('/index.html');
+  }
+</script>
+
     <canvas id="matrix-bg"></canvas>
     <div class="chat-terminal">
         <header>
