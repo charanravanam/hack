@@ -1,24 +1,4 @@
-// ===== Matrix Bg Effect (as before) =====
-const canvas = document.getElementById('matrix-bg');
-const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-const chars = 'アカサタナ...ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*';
-const fontSize = 17; const columns = Math.floor(canvas.width / fontSize);
-const drops = Array.from({ length: columns }).map(() => Math.random() * canvas.height / fontSize);
-function drawMatrix() {
-  ctx.fillStyle = 'rgba(16,24,32,0.15)';
-  ctx.fillRect(0,0,canvas.width,canvas.height);
-  ctx.font = `bold ${fontSize}px Fira Mono, Hack, IBM Plex Mono, monospace`;
-  ctx.fillStyle = '#39ff14';
-  for (let i=0;i<columns;i++) {
-    const char=chars[Math.floor(Math.random()*chars.length)];
-    ctx.fillText(char, i*fontSize, drops[i]*fontSize);
-    if (Math.random() > 0.95 || drops[i]*fontSize > canvas.height) drops[i]=0;
-    drops[i]++;
-  }
-}
-setInterval(drawMatrix, 55);
-window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
+
 
 // ===== Persona System =====
 const stages = [
