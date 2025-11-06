@@ -5,49 +5,51 @@
   <title>Hack Me By Charan</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
   <link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;700&display=swap" rel="stylesheet">
+
   <style>
     html, body {
       width: 100vw;
       height: 100vh;
       margin: 0;
       padding: 0;
-      background: #15191c; /* Dark cyber bg */
-      font-family: 'Fira Mono', 'Hack', 'IBM Plex Mono', monospace;
+      background: #15191c;
+      font-family: 'Fira Mono', 'Hack', 'IBM Plex Mono', 'Inter', Arial, sans-serif;
       color: #39ff14;
-      overflow: hidden;
+      overflow-x: hidden;
+      overflow-y: hidden;
+      box-sizing: border-box;
     }
     body::before {
       content:"";
       position:fixed; left:0; top:0; width:100vw; height:100vh; z-index:0;
-      background: radial-gradient(circle at 61% 37%, #39ff1480 0%, #2e67bc 33%, #15191c 100%);
-      opacity: .14; pointer-events: none;
+      background: radial-gradient(circle at 62% 37%, #39ff1485 0%, #2e67bc 33%, #15191c 100%);
+      opacity:.13; pointer-events: none;
     }
-    .chat-terminal {
+    .glass-shell {
       position: absolute;
-      left: 50%; top: 50%;
-      transform: translate(-50%, -50%);
-      width: 98vw; max-width: 470px; min-width: 320px;
-      height: 94vh; max-height: 840px; min-height: 420px;
+      left: 50%; top: 50%; transform: translate(-50%, -50%);
+      width: 97vw; max-width: 470px; min-width: 315px;
+      height: 95vh; max-height: 830px; min-height: 430px;
+      margin: 0 auto;
       background: rgba(20,32,49,0.98);
-      border-radius: 21px;
       box-shadow: 0 18px 60px #39ff1445, 0 8px 36px #161a1c38;
-      border: 2.2px solid #39ff14b8;
+      border-radius: 22px;
+      border: 2.3px solid #39ff1485;
+      backdrop-filter: blur(8px);
       display: flex; flex-direction: column;
       overflow: hidden; z-index: 2;
-      backdrop-filter: blur(7px);
       padding-bottom: 0;
     }
     header {
       display: flex; align-items: center; justify-content: space-between;
       background: linear-gradient(96deg, #181c39 64%, #17261a 120%);
-      padding: 1.18em 1.25em 1.12em 1.4em;
-      border-bottom: 2px solid #39ff144a;
+      padding: 1.16em 1.25em 1.06em 1.4em;
+      border-bottom: 2px solid #39ff1446;
     }
     h1 {
-      font-size: 1.19em; font-weight: 650;
-      color: #39ff14;
-      margin: 0;
-      letter-spacing: 0.11em;
+      font-size: 1.18em; font-weight: 650;
+      color: #39ff14; margin: 0;
+      letter-spacing: 0.13em;
       background: linear-gradient(90deg, #39ff14 65%, #5effd5 120%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -69,28 +71,28 @@
       padding: 2em 1.35em 1.1em 1.4em;
       overflow-y: auto;
       background: transparent;
-      outline: none;
-      font-size: 1.12em;
-      gap: 1.14em;
+      font-size: 1.13em;
+      gap: 1.12em;
       display: flex;
       flex-direction: column;
       min-height: 0;
+      scroll-behavior: smooth;
     }
     .msg {
-      max-width: 90%;
+      max-width: 83%;
       min-width: 40px;
-      padding: 0.97em 1.19em;
+      padding: 1.07em 1.25em;
       border-radius: 17px 17px 14px 11px / 19px 19px 13px 11px;
       font-size: 1.07em;
       font-weight: 600;
       background: #23341d;
       color: #aefcdb;
       align-self: flex-start;
-      border: 1.4px solid #39ff1492;
+      border: 1.4px solid #39ff1490;
       box-shadow: 0 3px 12px #39ff1430;
       word-break: break-word;
-      animation: appear 0.21s;
-      margin-bottom: 0.2em;
+      animation: appear 0.19s;
+      margin-bottom: 0.18em;
     }
     .msg.user {
       align-self: flex-end;
@@ -99,35 +101,35 @@
       border: 1.2px solid #39ff1479;
     }
     @keyframes appear {
-      from { opacity: 0; transform: translateY(23px) scale(0.97); }
+      from { opacity: 0; transform: translateY(21px) scale(0.97); }
       to { opacity: 1; transform: none; }
     }
     form {
       display: flex;
-      gap: 0.7em;
-      padding: 1.24em 1.3em 1.18em 1.4em;
+      gap: 0.8em;
+      padding: 1.26em 1.33em 1.15em 1.41em;
       background: #131926;
-      border-top: 1.7px solid #39ff1471;
+      border-top: 1.7px solid #39ff1465;
       box-shadow: 0 -10px 28px #0007;
       position: relative;
     }
     #chat-input {
       flex: 1;
-      font-size: 1.11em;
+      font-size: 1.13em;
       border-radius: 11px;
       border: 1.55px solid #39ff149c;
       padding: 1em 1em;
-      background: #1c3325;
+      background: #162716;
       color: #e9fff4;
       outline: none;
       font-weight: 550;
-      transition: border 0.24s, box-shadow 0.22s;
       box-shadow: 0 1px 7px #39ff1412;
       min-width: 0;
+      transition: border 0.23s, box-shadow 0.21s, background 0.23s;
     }
     #chat-input:focus {
       border: 1.7px solid #39ff14;
-      background: #182f1c;
+      background: #192f1c;
       box-shadow: 0 3px 21px #39ff1498;
     }
     button[type="submit"] {
@@ -135,12 +137,12 @@
       color: #191f29;
       border: none;
       border-radius: 11px;
-      padding: 0.86em 1.19em;
+      padding: 0.96em 1.22em;
       font-size: 1.15em;
       font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 2px 11px #39ff147a;
-      transition: background 0.17s, color 0.18s;
+      box-shadow: 0 2px 11px #39ff146c;
+      transition: background 0.16s, color 0.19s;
       outline: none;
       display: flex;
       align-items: center;
@@ -153,11 +155,11 @@
     ::-webkit-scrollbar { width: 7px; background: transparent; }
     ::-webkit-scrollbar-thumb { background: #252a41; border-radius: 13px; }
     @media (max-width: 700px) {
-      .chat-terminal { width:99vw; height:100vh; max-width:99vw; max-height:100vh; border-radius:0; left:0; top:0; transform:none; }
-      .messages { padding: 1.13em 0.5em 0.81em 0.67em; font-size: 1.07em;}
-      form { padding: 0.94em 0.7em 0.92em 0.75em; }
-      header { padding: 1.02em 0.69em 0.83em 0.73em;}
-      #stage-label { padding: 4px 10px; font-size: 0.97rem; }
+      .glass-shell { width:99vw; height:100vh; max-width:99vw; max-height:100vh; border-radius:0; left:0; top:0; transform:none; }
+      .messages { padding: 1.1em 0.5em 0.8em 0.68em; font-size: 1.09em;}
+      form { padding: 0.92em 0.72em 0.89em 0.77em;}
+      header { padding: 0.97em 0.74em 0.82em 0.7em;}
+      #stage-label { padding: 4px 8px; font-size: 0.97em; }
     }
   </style>
   <script>
@@ -168,39 +170,51 @@
   </script>
 </head>
 <body>
-  <div class="chat-terminal">
+  <div class="glass-shell">
     <header>
       <h1>root@hustle:/Charan Hacks</h1>
       <span id="stage-label">Hacker</span>
     </header>
     <div class="messages" id="chat-messages"></div>
     <form id="chat-form" autocomplete="off">
-      <input type="text" id="chat-input" placeholder="> Sayy anything..." autocomplete="off" />
-      <button type="submit"><span style="font-size:1.13em;">&gt;</span></button>
+      <input type="text" id="chat-input" placeholder="> Ask me anything about cybersecurity..." autocomplete="off" />
+      <button type="submit"><span style="font-size:1.13em;">&#9658;</span></button>
     </form>
   </div>
   <script>
-    // Sample chat handler - replace with your advanced logic as needed
-    document.getElementById('chat-form').onsubmit = function(e) {
+    // This fetches from your working Gemini API backend
+    document.getElementById('chat-form').onsubmit = async function(e) {
       e.preventDefault();
       const chatMessages = document.getElementById('chat-messages');
       const input = document.getElementById('chat-input');
       const msg = input.value.trim();
       if (!msg) return;
+      // User bubble
       const userBubble = document.createElement('div');
       userBubble.className = 'msg user';
       userBubble.textContent = msg;
       chatMessages.appendChild(userBubble);
       chatMessages.scrollTop = chatMessages.scrollHeight;
       input.value = '';
-      // Dummy bot reply for now
-      setTimeout(() => {
-        const botBubble = document.createElement('div');
-        botBubble.className = 'msg';
-        botBubble.textContent = 'Bot: ' + msg;
-        chatMessages.appendChild(botBubble);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-      }, 600);
+      // Bot "typing..."
+      const botBubble = document.createElement('div');
+      botBubble.className = 'msg';
+      botBubble.textContent = "Cybersecurity bot is typing...";
+      chatMessages.appendChild(botBubble);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+      // Call Gemini API backend
+      try {
+        const res = await fetch('/.netlify/functions/cyber-bot', {
+          method: 'POST',
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: msg })
+        });
+        const data = await res.json();
+        botBubble.textContent = data.reply || "Sorry, no cybersecurity answer available.";
+      } catch (err) {
+        botBubble.textContent = "Bot error: Could not reach Gemini API.";
+      }
+      chatMessages.scrollTop = chatMessages.scrollHeight;
     };
   </script>
 </body>
