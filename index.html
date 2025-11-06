@@ -2,250 +2,246 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Gatekeeper Chat</title>
+  <title>Gatekeeper Access</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
   <link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
     html, body {
-      width: 100vw;
       height: 100vh;
+      min-height: 100vh;
       margin: 0;
       padding: 0;
-      font-family: 'Fira Mono', 'Hack', 'IBM Plex Mono', 'Inter', Arial, sans-serif;
-      background: #161a1c;
+      background: #15191c;
+      font-family: 'Fira Mono', 'Hack', 'IBM Plex Mono', monospace;
       color: #39ff14;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       overflow-x: hidden;
-      overflow-y: hidden;
     }
     body::before {
       content:"";
       position:fixed; left:0; top:0; width:100vw; height:100vh; z-index:0;
-      background: radial-gradient(circle at 63% 39%, #39ff14 0%, #2e67bc 28%, #161a1c 100%);
-      opacity: .13; pointer-events: none;
+      background: radial-gradient(circle at 60% 40%, #39ff14 0%, #2e67bc 30%, #15191c 100%);
+      opacity:.13; pointer-events: none;
     }
-    .glass-shell {
-      position: absolute;
-      left: 50%; top: 50%;
-      transform: translate(-50%, -50%);
-      width: 97vw; max-width: 480px; min-width: 320px;
-      height: 96vh; max-height: 838px; min-height: 410px;
-      margin: 0 auto;
-      background: rgba(20,32,49,0.98);
-      box-shadow: 0 18px 60px #39ff1440, 0 5px 42px #161a1c40;
-      border-radius: 24px;
-      border: 2.3px solid #39ff1485;
-      backdrop-filter: blur(8px);
+    .access-container {
+      width: 98vw;
+      max-width: 410px;
+      min-width: 280px;
+      background: rgba(20,32,49,0.97);
+      border-radius: 20px;
+      border: 2.5px solid #39ff14b5;
+      box-shadow: 0 18px 60px #39ff1450, 0 5px 38px #161a1c40;
+      backdrop-filter: blur(7px);
+      padding: 2.9em 2em 2.1em 2em;
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
-      overflow: hidden;
-      z-index: 2;
-    }
-    .chat-header {
-      display: flex;
       align-items: center;
-      gap: 1.14em;
-      border-bottom: 1.7px solid #39ff1435;
-      background: linear-gradient(96deg, #181c39 54%, #122a13 100%);
-      padding: 1.32em 1.8em 1.1em 1.7em;
+      margin: auto;
+      position: relative;
+      z-index: 2;
+      animation: floatAccess 1.1s cubic-bezier(.31,1.2,.51,1) 1 forwards;
+      opacity: 0.97;
     }
-    .avatar-holder {
-      width: 53px; height: 53px; border-radius: 50%;
-      background: linear-gradient(144deg,#39ff14 60%,#3ecb93 100%);
-      box-shadow: 0 2px 14px #39ff1417;
-      display: flex; align-items: center; justify-content: center; position: relative; overflow:hidden;
+    @keyframes floatAccess {
+      from { opacity:0; transform: translateY(65px) scale(0.96);}
+      to { opacity:0.97; transform: none;}
     }
-    .avatar-init {
-      font-size: 2em; font-weight: 800; color: #222;
-      font-family: inherit;
-      letter-spacing: 1px;
-      background: linear-gradient(120deg, #39ff14 58%, #122 100%);
+    .access-title {
+      font-size: 2em;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      margin: 0 0 0.56em 0;
+      color: #39ff14;
+      text-shadow: 0 2px 18px #39ff1480;
+      background: linear-gradient(92deg,#39ff14 70%,#00ffd8 110%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-align: center;
     }
-    .chat-header h1 {
-      margin: 0 0 0.12em 0;
-      font-size: 1.23em;
+    .access-desc {
+      font-size: 1.09em;
+      color: #a7fcb5;
+      text-align: center;
+      font-weight: 500;
+      line-height: 1.6;
+      margin: 0 0 1.22em 0;
+    }
+    .access-info {
+      background: rgba(27,38,42,0.38);
+      color: #82ffd0;
+      font-size: 0.97em;
+      border-radius: 8px;
+      padding: 0.86em 1.1em;
+      margin-bottom: 1.29em;
+      line-height: 1.56;
+      width: 100%;
+      text-align: left;
+      box-shadow: 0 1px 10px #39ff1417;
+    }
+    .btn-contact {
+      display: block;
+      font-size: 1.13em;
       font-weight: 700;
-      color: #39ff14;
-      letter-spacing: 0.09em;
+      background: linear-gradient(92deg,#39ff14 50%,#00ffd8 200%);
+      color: #191f29;
+      border: none;
+      border-radius: 10px;
+      padding: 0.88em 1.65em;
+      margin: 1.1em auto 0 auto;
+      cursor: pointer;
+      letter-spacing: 1.2px;
+      box-shadow: 0 0 14px #39ff1450;
+      transition: filter 0.18s, background 0.22s;
+    }
+    .btn-contact:hover, .btn-contact:focus {
+      filter: brightness(1.10);
+      outline: 2.4px solid #00ffd8;
+    }
+    .access-form {
       display: flex;
-      align-items: center;
-      gap: 0.38em;
+      flex-direction: column;
+      width: 100%;
+      margin-top: 2.1em;
     }
-    .desc-line {
-      margin: 0; font-size: 1.04em; color: #85fdda;
-      font-weight: 500; letter-spacing: 0.075em;
-    }
-
-    .chatbox {
-      flex: 1 1 0;
-      display: flex; flex-direction: column;
-      padding: 2.1em 1.55em 1em 1.6em;
-      overflow-y: auto;
-      gap: 1.22em;
-      background: none;
-      min-height: 0;
-      outline: none;
-      transition: padding 0.3s;
-      scroll-behavior: smooth;
-    }
-
-    .bubble {
-      max-width: 80%;
-      min-width: 44px;
-      padding: 1.09em 1.39em;
-      border-radius: 16px 16px 12px 8px/21px 21px 14px 11px;
-      font-size: 1.07em; font-weight: 600;
-      background: #192839;
-      color: #aefcdb;
-      align-self: flex-start;
-      box-shadow: 0 2px 13px #39ff144a;
-      border: 1.55px solid #39ff1485;
-      position: relative; animation: appear 0.23s;
-      transition: background 0.5s, color 0.5s; word-break: break-word;
-    }
-    .bubble.user {
-      align-self: flex-end;
-      background: linear-gradient(121deg, #2e67bc 56%, #39ff14 120%);
-      color: #11141a;
-      border: 1.1px solid #2a88b0;
-      border-radius: 16px 16px 8px 16px/21px 21px 12px 21px;
+    .label-access {
+      color: #61ffa3;
+      font-size: 1.09em;
       font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 0.44em;
+      text-align: left;
     }
-    @keyframes appear {
-      from { opacity: 0; transform: translateY(28px) scale(0.96);}
-      to { opacity: 1; transform: none;}
-    }
-
-    /* Chat form styling */
-    .chat-form-area {
-      display: flex; gap: 0.9em;
-      padding: 1.21em 1.6em 1.17em 1.65em;
-      background: #131926;
-      border-top: 1.8px solid #39ff1494;
-      box-shadow: 0 -6px 26px #0005;
-      position: relative;
-    }
-    #chat-input {
-      flex: 1 1 0;
-      font-size: 1.11em;
-      border-radius: 13px;
-      border: 1.58px solid #39ff1496;
-      padding: 1em 1.08em;
-      background: #1c2a2e;
-      color: #f0fff8;
+    .input-code {
+      width: 100%;
+      font-size: 1.18em;
+      background: #131a16;
+      color: #39ff14;
+      border: 2px solid #39ff1493;
+      border-radius: 11px;
+      padding: 1em 1em;
+      font-weight: 650;
+      margin-bottom: 1.12em;
       outline: none;
-      font-weight: 550;
-      transition: border 0.24s, box-shadow 0.25s;
-      box-shadow: 0 1px 7px #39ff1422;
+      letter-spacing: 1px;
+      box-shadow: 0 2px 9px #39ff1433 inset, 0 1px 17px #003c1e19;
+      text-align: center;
+      transition: border 0.22s, box-shadow 0.17s;
+      caret-color: #00ffd8;
     }
-    #chat-input:focus {
-      border: 1.8px solid #39ff14;
-      background: #122f16;
-      box-shadow: 0 2px 21px #0eb9fa40;
+    .input-code:focus {
+      border: 2px solid #00ffd8;
+      background: #162c19;
+      box-shadow: 0 2px 17px #39ff1485, 0 0 18px #00ffb333;
     }
-    .chat-btn {
-      background: linear-gradient(90deg, #39ff14 45%, #00ffd8 100%);
-      color: #191f29; border: none;
-      border-radius: 13px; padding: 0.97em 1.46em;
-      font-size: 1.14em; font-weight: 700; cursor: pointer;
-      box-shadow: 0 2px 13px #39ff1485; outline: none;
-      display: flex; align-items: center; justify-content: center;
-      transition: background 0.22s, box-shadow 0.22s;
+    .unlock-btn {
+      font-family: inherit;
+      font-size: 1.18em;
+      font-weight: 900;
+      width: 100%;
+      background: linear-gradient(90deg,#39ff14 70%,#00ffd8 100%);
+      color: #182111;
+      padding: 0.98em 0;
+      border: none;
+      border-radius: 11px;
+      cursor: pointer;
+      margin-bottom: 0.22em;
+      letter-spacing: 1px;
+      box-shadow: 0 0 18px #39ff1450;
+      transition: background 0.14s, color 0.16s;
+      outline: none;
     }
-    .chat-btn:hover, .chat-btn:focus {
-      background: linear-gradient(101deg,#39ff14 27%, #00ffd8 120%);
-      color: #031325; box-shadow: 0 7px 32px #39ff1475;
+    .unlock-btn:hover, .unlock-btn:focus {
+      background: linear-gradient(90deg,#00ffd8 33%,#39ff14 90%);
+      color: #062a22;
     }
-
-    /* Nav Bar Styling */
-    .cyber-navbar {
-      position: fixed;
-      bottom: 0; left: 0; width: 100vw; height: 55px;
-      background: linear-gradient(90deg,#1c2329 0%,#181c39 100%);
-      display: flex; align-items: center; justify-content: space-around;
-      box-shadow: 0 -7px 24px #39ff1429; z-index: 10;
-      font-size: 1em;
+    .error-message {
+      color: #fd2774;
+      min-height: 1.3em;
+      font-size: 1.03em;
+      font-weight: 600;
+      text-align: center;
+      letter-spacing: .7px;
+      margin-top: 0.4em;
+      background: transparent;
+      transition: color 0.16s;
     }
-    .cyber-nav-icon {
-      color: #39ff14; font-size: 1.12em;
-      background: #161f19; padding: 10px 17px; border-radius: 13px;
-      margin: 0 7px; cursor: pointer; font-family: inherit;
-      font-weight: 600; border: none; box-shadow: 0 2px 16px #39ff1450;
-      transition: background 0.14s, color 0.17s;
+    @media (max-width:600px){
+      .access-container { max-width: 99vw; padding: 1.5em 0.8em 1.5em 0.8em;}
+      .access-title { font-size: 1.26em;}
+      .access-form { margin-top: 1.2em;}
     }
-    .cyber-nav-icon:active, .cyber-nav-icon:hover {
-      background: #39ff1485; color: #161a1c;
-    }
-
-    /* Responsive - mobile */
-    @media (max-width: 700px) {
-      .glass-shell {
-        width: 99vw; height: 100vh; min-width:0; max-width:100vw; max-height:100vh; border-radius:0; margin:0; }
-      header { font-size: 1.07rem; padding-left:0.62em; padding-right:0.62em; }
-      .chatbox { padding: 0.85em 0.36em 0.9em 0.42em; }
-      .chat-form-area { padding-left:0.3em; padding-right:0.3em; }
-      .desc-line { font-size: 1.01em;}
-      .cyber-navbar { height: 61px; font-size: 1.03em;}
-    }
-    @media (min-width: 1200px) {
-      .glass-shell { max-width:540px; }
-    }
-    ::-webkit-scrollbar { width: 7px; background: transparent;}
-    ::-webkit-scrollbar-thumb { background: #252a41; border-radius: 13px;}
-    ::-webkit-scrollbar-track { background: transparent; }
+    @media (min-width:1000px){ .access-container{ max-width: 490px; } }
   </style>
 </head>
 <body>
-  <div class="glass-shell">
-    <div class="chat-header" aria-label="Chatbot header">
-      <div class="avatar-holder"><span class="avatar-init">G</span></div>
-      <div>
-        <h1>Gatekeeper Bot</h1>
-        <div class="desc-line">Cybersecure assistant chat</div>
-      </div>
-    </div>
-    <div class="chatbox" id="chat-messages" aria-label="Chat message area">
-      <!-- Chat bubbles go here -->
-      <div class="bubble">Welcome. Type your command below.</div>
-    </div>
-    <form class="chat-form-area" id="chat-form" autocomplete="off" aria-label="Send chat">
-      <input id="chat-input" type="text" placeholder="Type your message..." autocomplete="off" />
-      <button type="submit" class="chat-btn" aria-label="Send">
-        <span style="font-size:1.17em;">&#10148;</span>
-      </button>
-    </form>
+<div class="access-container" role="main" aria-label="Secure access panel">
+  <div class="access-title">Gatekeeper Access</div>
+  <div class="access-desc">
+    Welcome to <b>Gatekeeper</b>, a secure cyber lab for ethical hacking, CTFs, and advanced cyber education.
+    Strictly limited to verified users, students, or participants with explicit authorization.
   </div>
-  <div class="cyber-navbar" aria-label="Navigation bar">
-    <button class="cyber-nav-icon">Home</button>
-    <button class="cyber-nav-icon">Hack</button>
-    <button class="cyber-nav-icon">CTF</button>
-    <button class="cyber-nav-icon">Profile</button>
+  <div class="access-info">
+    <span style="font-weight:bold; color:#00ffd8;">Why is access restricted?</span>
+    <br>All content and tools are highly sensitive and for education or research only.<br><br>
+    <span style="color:#39ff14; font-weight:600;">How do I get an access code?</span>
+    <ul style="padding-left:1.1em; color:#82ffd0;">
+      <li>Official invite from your event/instructor</li>
+      <li>Admin validation (DM required)</li>
+      <li>Participation in a verified training or hackathon</li>
+    </ul>
+    If you’re unsure or need help, contact the admin directly below.
   </div>
-  <script>
-    // Example chat handler (simulated for demo)
-    const form = document.getElementById('chat-form');
-    const chatInput = document.getElementById('chat-input');
-    const chatMessages = document.getElementById('chat-messages');
-    form.onsubmit = e => {
-      e.preventDefault();
-      const text = chatInput.value.trim();
-      if (!text) return;
-      const userBubble = document.createElement('div');
-      userBubble.className = "bubble user";
-      userBubble.innerText = text;
-      chatMessages.appendChild(userBubble);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-      chatInput.value = "";
-      setTimeout(() => {
-        const botBubble = document.createElement('div');
-        botBubble.className = "bubble";
-        botBubble.innerText = "Bot reply: " + text;
-        chatMessages.appendChild(botBubble);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-      }, 700);
-    };
-  </script>
+  <button class="btn-contact" onclick="window.open('https://instagram.com/yourusername','_blank')">
+    Contact Admin
+  </button>
+
+  <form class="access-form" id="code-access-form" autocomplete="off" aria-label="Access code entry form">
+    <label for="access-code" class="label-access">Enter Access Code</label>
+    <input type="text" id="access-code" class="input-code" placeholder="Your access code" required maxlength="48" autocapitalize="off" inputmode="text" aria-label="Access Code">
+    <button type="submit" class="unlock-btn" id="unlock-btn" aria-label="Unlock Access">Unlock</button>
+    <div class="error-message" id="error-msg" aria-live="polite"></div>
+  </form>
+</div>
+<script>
+  const codeInput = document.getElementById('access-code');
+  const codeForm = document.getElementById('code-access-form');
+  const errorMsg = document.getElementById('error-msg');
+  const unlockBtn = document.getElementById('unlock-btn');
+
+  codeForm.onsubmit = async function (e) {
+    e.preventDefault();
+    errorMsg.textContent = '';
+    unlockBtn.disabled = true;
+    unlockBtn.textContent = "Checking...";
+    const code = codeInput.value.trim();
+    try {
+      const res = await fetch('/.netlify/functions/verify-access', {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code })
+      });
+      const data = await res.json();
+      if (data.success) {
+        localStorage.setItem("hasAccess", "true");
+        document.body.style.background = "#10160c";
+        setTimeout(() => { window.location.href = "/chat.html"; }, 520);
+      } else {
+        errorMsg.textContent = data.error || "Invalid or expired code. Contact admin for access.";
+        codeInput.value = "";
+        codeInput.focus();
+      }
+    } catch (err) {
+      errorMsg.textContent = "Network error. Try again.";
+    }
+    unlockBtn.disabled = false;
+    unlockBtn.textContent = "Unlock";
+  };
+  document.addEventListener('DOMContentLoaded', () => { codeInput.focus(); });
+  codeInput.addEventListener('keydown', e => { if (e.key === "Enter") unlockBtn.click(); });
+</script>
 </body>
 </html>
