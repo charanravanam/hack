@@ -1,24 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+<script>
+    // Check some marker in localStorage/sessionStorage for validation
+    if (!localStorage.getItem("hasAccess")) {
+        window.location.replace("/access-code.html");
+    }
+</script>
+
+
 <head>
-  <meta charset="UTF-8">
-  <title>Hack Me By Charan</title>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Hack Me By Charan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  <canvas id="matrix-bg"></canvas>
-  <div class="chat-terminal">
-    <header>
-      <h1>root@hustle:/Charan Hacks</h1>
-      <span id="stage-label">Hacker</span>
-    </header>
-    <div class="messages" id="chat-messages"></div>
-    <form id="chat-form" autocomplete="off">
-      <input type="text" id="chat-input" placeholder="> Say anything..." autocomplete="off"/>
-      <button type="submit">Send</button>
-    </form>
-  </div>
-  <script src="script.js"></script>
+    <canvas id="matrix-bg"></canvas>
+    <div class="chat-terminal">
+        <header>
+            <h1>root@hustle:/Charan Hacks</h1>
+            <span id="stage-label">Hacker</span>
+        </header>
+        <div class="messages" id="chat-messages"></div>
+        <form id="chat-form" autocomplete="off">
+            <input type="text" id="chat-input" placeholder="> Say anything..." autocomplete="off" />
+            <button type="submit">Send</button>
+        </form>
+    </div>
+    <script src="script.js"></script>
 </body>
+
 </html>
