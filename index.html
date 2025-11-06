@@ -323,6 +323,10 @@
                     body: JSON.stringify({ code })
                 });
 
+                localStorage.setItem("hasAccess", "true");
+                window.location.href = "/chat.html";
+
+
                 const data = await res.json();
                 if (data.success) {
                     document.body.style.background = "#10160c";
