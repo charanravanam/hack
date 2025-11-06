@@ -1,1 +1,202 @@
-<!DOCTYPE html> <html lang="en"> <script> // Check some marker in localStorage/sessionStorage for validation if (!localStorage.getItem("hasAccess")) { window.location.replace("/index.html"); } </script> <head> <meta charset="UTF-8"> <title>Hack Me By Charan</title> <link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;700&display=swap" rel="stylesheet"> <link rel="stylesheet" href="style.css"> </head> <body> <canvas id="matrix-bg"></canvas> <div class="chat-terminal"> <header> <h1>root@hustle:/Charan Hacks</h1> <span id="stage-label">Hacker</span> </header> <div class="messages" id="chat-messages"></div> <form id="chat-form" autocomplete="off"> <input type="text" id="chat-input" placeholder="> Say anything..." autocomplete="off" /> <button type="submit">Send</button> </form> </div> <script src="script.js"></script> </body> </html>
+<!DOCTYPE html>
+<html lang="en">
+<script>
+  // Access gating (unchanged)
+  if (!localStorage.getItem("hasAccess")) {
+    window.location.replace("/index.html");
+  }
+</script>
+<head>
+  <meta charset="UTF-8">
+  <title>Hack Me By Charan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      font-family: 'Fira Mono', 'Hack', 'IBM Plex Mono', monospace;
+      background: #15191c;
+      color: #39ff14;
+      overflow-x: hidden;
+      overflow-y: hidden;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    body::before {
+      content:"";
+      position:fixed; left:0; top:0; width:100vw; height:100vh; z-index:0;
+      background: radial-gradient(circle at 62% 37%, #39ff1480 0%, #2e67bc 36%, #15191c 100%);
+      opacity:.11; pointer-events: none;
+    }
+    /* Optional clean canvas background, hidden by default (if you revive matrix) */
+    #matrix-bg {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      background: transparent;
+    }
+    .chat-terminal {
+      position: relative;
+      width: 97vw;
+      max-width: 430px;
+      min-width: 290px;
+      height: 96vh;
+      max-height: 860px;
+      min-height: 410px;
+      background: rgba(20,32,49,0.98);
+      border-radius: 24px;
+      box-shadow: 0 18px 60px #39ff1440, 0 7px 37px #15191c40;
+      border: 2.2px solid #39ff14ba;
+      backdrop-filter: blur(8px);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      overflow: hidden;
+      z-index: 2;
+      margin: auto;
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+    }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(97deg, #181c39 55%, #15191c 100%);
+      padding: 1.19em 1.22em 1.09em 1.29em;
+      border-bottom: 2px solid #39ff144d;
+    }
+    h1 {
+      font-size: 1.18em; font-weight: 700;
+      color: #39ff14; letter-spacing: 0.09em; margin: 0;
+      background: linear-gradient(90deg, #39ff14 53%, #00ffd8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    #stage-label {
+      margin-left: 14px;
+      border-radius: 7px;
+      padding: 5px 14px;
+      background: #23281f;
+      color: #85ff3a; font-size: 1.01em;
+      border: 1.2px solid #39ff14; letter-spacing: 1px; font-weight: bold;
+    }
+    .messages {
+      flex: 1 1 0%;
+      padding: 1.5em 1.25em 1em 1.25em;
+      overflow-y: auto;
+      font-size: 1.13em;
+      gap: 1.12em;
+      display: flex;
+      flex-direction: column;
+      background: transparent;
+      min-height: 0;
+      scroll-behavior: smooth;
+      align-items: flex-start;
+    }
+    .msg {
+      max-width: 85%;
+      min-width: 42px;
+      margin: 0.2em auto 0.2em auto;
+      padding: 1.05em 1.3em;
+      border-radius: 18px 18px 12px 14px / 21px 21px 17px 16px;
+      font-size: 1.08em;
+      font-weight: 600;
+      background: #20331a;
+      color: #aefcdb;
+      border: 1.39px solid #39ff1497;
+      box-shadow: 0 3px 14px #39ff1428;
+      word-break: break-word;
+      animation: appear 0.19s;
+    }
+    .msg.user {
+      align-self: flex-end;
+      background: linear-gradient(119deg, #2e67bc 55%, #39ff14 120%);
+      color: #101820;
+      border: 1.19px solid #39ff1470;
+      margin-right: 0;
+    }
+    @keyframes appear { from { opacity: 0; transform: translateY(21px) scale(0.97); } to { opacity: 1; transform: none; } }
+    form {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.8em;
+      padding: 1.2em 1em 1.14em 1em;
+      background: #151f28;
+      border-top: 1.65px solid #39ff1494;
+      box-shadow: 0 -6px 25px #0007;
+      position: relative;
+    }
+    #chat-input {
+      flex: 1 1 0;
+      font-size: 1.11em;
+      border-radius: 11px;
+      border: 1.54px solid #39ff148a;
+      padding: 1em 1em;
+      background: #142a1c;
+      color: #eafff2;
+      outline: none; font-weight: 550;
+      min-width: 0;
+      transition: border 0.23s, box-shadow 0.21s, background 0.23s;
+      box-shadow: 0 1px 7px #39ff141a;
+    }
+    #chat-input:focus {
+      border: 1.7px solid #39ff14;
+      background: #172f1c;
+      box-shadow: 0 3px 19px #39ff1498;
+    }
+    button[type="submit"] {
+      background: linear-gradient(96deg,#39ff14 44%,#00ffd8 99%);
+      color: #191f29;
+      border: none;
+      border-radius: 11px;
+      padding: 0.98em 1.23em;
+      font-size: 1.16em;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 2px 13px #39ff146c;
+      transition: background 0.16s, color 0.19s;
+      outline: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    button[type="submit"]:hover, button[type="submit"]:focus {
+      background: linear-gradient(108deg,#00ffd8 13%,#39ff14 85%);
+      color: #06281c;
+    }
+    ::-webkit-scrollbar { width: 8px; background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #202a41; border-radius: 13px; }
+    @media (max-width: 600px) {
+      .chat-terminal {width:99vw; height:100vh; max-width:99vw; max-height:100vh; border-radius:0; left:0; top:0; transform:none;}
+      header { padding: 1em 0.87em 0.92em 0.85em;}
+      .messages { padding: 1em 0.36em 0.9em 0.36em; font-size: 1.07em;}
+      form { padding: 1em 0.62em 0.99em 0.66em;}
+      #stage-label { padding: 4px 7px; font-size: 0.97em;}
+    }
+  </style>
+</head>
+<body>
+  <!-- Optional: matrix-bg canvas (hidden by CSS unless you need it) -->
+  <canvas id="matrix-bg"></canvas>
+  <div class="chat-terminal">
+    <header>
+      <h1>root@hustle:/Charan Hacks</h1>
+      <span id="stage-label">Hacker</span>
+    </header>
+    <div class="messages" id="chat-messages"></div>
+    <form id="chat-form" autocomplete="off">
+      <input type="text" id="chat-input" placeholder="> Say anything..." autocomplete="off" />
+      <button type="submit">Send</button>
+    </form>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
