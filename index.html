@@ -2,103 +2,250 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Gatekeeper: Secure Cyber Access</title>
+  <title>Gatekeeper Chat</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
   <link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    html, body { width:100vw; min-height:100vh; margin:0; padding:0; font-family:'Fira Mono','Hack','IBM Plex Mono',monospace; background:#15191c; color:#39ff14; overflow-x:hidden;}
-    body::before { content:""; position:fixed;left:0;top:0;width:100vw;height:100vh;z-index:0; background:radial-gradient(ellipse at top right,#39ff1457 0px,transparent 670px),radial-gradient(ellipse at bottom left,#00ffd87c 0px,transparent 570px); opacity:.14;pointer-events:none;}
-    .main-container { min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;position:relative;z-index:2;width:100vw;}
-    .intro-panel { width:99vw;max-width:540px;background:rgba(20,30,38,0.92);border-radius:22px;border:2.2px solid #00ffc9a0;box-shadow:0 0 22px #00ffc9c1,0 0 70px #39ff1435,0 2px 18px #00082955;margin:2.7em auto 1.6em auto;padding:2.1em 2em 1.34em 2em;display:flex;flex-direction:column;align-items:center;position:relative;backdrop-filter:blur(8px);animation:floatPanel 1.8s cubic-bezier(.31,1.2,.51,1) 1 forwards;opacity:0.99;}
-    @keyframes floatPanel { from{opacity:0.0;transform:translateY(60px) scale(0.93);}to{opacity:0.99;transform:translateY(0) scale(1);} }
-    .site-title {color:#39ff14;font-size:2.1em;text-align:center;font-family:inherit;font-weight:800;background:linear-gradient(95deg,#39ff14 63%,#00ffd8 98%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:2px;margin:0 0 0.55em 0;text-shadow:0 1px 18px #39ff1440;}
-    .intro-desc { font-size:1.15em;text-align:center;color:#33fd61;margin:0 0 1.7em 0;font-weight:600;line-height:1.6;text-shadow:0 0 11px #00ffd941;}
-    .access-info {font-size:1.07em;color:#82ffd0;text-align:center;margin-bottom:0.8em;letter-spacing:0.8px;background:rgba(27,38,42,0.32);border-radius:9px;padding:0.81em 1.1em;box-shadow:0 1px 11px #39ff1412;line-height:1.62;}
-    .btn-contact {font-size:1.11em;font-weight:700;background:linear-gradient(90deg,#00ffd8 45%,#39ff14 100%);color:#18291a;border:none;border-radius:9px;padding:0.85em 1.6em;cursor:pointer;letter-spacing:1.2px;margin-top:0.52em;transition:filter 0.13s;outline:none;box-shadow:0 0 16px #39ff1445;}
-    .btn-contact:hover,.btn-contact:focus{filter:brightness(1.13); box-shadow:0 0 39px #00ffb3ed; outline:2.5px solid #18fca9;}
-    .entry-panel{ width:99vw;max-width:480px;background:rgba(18,24,34,0.97);border-radius:19px;border:2.5px solid #39ff14bb;box-shadow:0 0 32px #00ffd8,0 0 32px #39ff143c,0 1.5px 22px #00082999;padding:2.13em 1.5em 2.2em 1.5em;display:flex;flex-direction:column;align-items:stretch;position:relative;z-index:4;margin-bottom:2.3em; animation:floatPanel 1.2s cubic-bezier(.31,1.2,.51,1) 1 0.5s backwards;}
-    .entry-panel h2{color:#39ff14;font-size:1.49em;text-align:center;margin-bottom:0.9em;font-weight:700;letter-spacing:1px;text-shadow:0 0 14px #39ff1430;background:linear-gradient(90deg,#39ff14 50%,#00ffd8 98%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-    .label-access{color:#61ffa3;font-size:1.12em;font-weight:bold;margin:0 0 .38em 0;letter-spacing:.9px;text-align:left;}
-    .input-cyber{width:100%; font-size:1.24em; background:#141a1cdd; color:#39ff14; border:2px solid #39ff146c;border-radius:13px;padding:1.13em 1.16em;font-weight:700;margin-bottom:1.4em;outline:none;letter-spacing:1.21px;box-shadow:0 2px 15px #39ff1423 inset,0 0 9px #003c1e2f;text-align:center;transition:border-color 0.22s,box-shadow 0.19s;caret-color:#00ffd8;}
-    .input-cyber:focus{border-color:#00ffd8;box-shadow:0 2px 19px #39ff14bb,0 0 20px #00ffb34c;}
-    .unlock-btn{font-family:inherit;font-size:1.22em;width:100%;background:linear-gradient(90deg,#39ff14 66%,#00ffd8 100%);color:#05120c;padding:1.08em 0;border:none;font-weight:800;border-radius:11px;cursor:pointer;box-shadow:0 0 17px #39ff1430;letter-spacing:1.11px;transition:background 0.13s,box-shadow 0.15s,color 0.17s;margin-top:0.5em;outline:none;}
-    .unlock-btn:disabled { opacity: 0.67; pointer-events: none; }
-    .unlock-btn:hover, .unlock-btn:focus {background:linear-gradient(90deg,#00ffd8 36%,#39ff14 90%);color:#007156;box-shadow:0 0 25px #1cffa867; outline:2px solid #00ffd8;}
-    .error-message{color:#fd2774; min-height:1.9em; font-size:1.09em; font-weight:bold; text-align:center; letter-spacing:.7px; background:transparent; transition:color 0.16s;}
-    @media (max-width:600px){.intro-panel, .entry-panel {margin:1.65em auto 1.09em auto;padding:1.45em 0.7em;} .site-title{font-size:1.28em;} .entry-panel{max-width:99vw;}}
-    @media (min-width:900px){.main-container{max-width:1240px;} .intro-panel,.entry-panel{max-width:580px;}}
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      font-family: 'Fira Mono', 'Hack', 'IBM Plex Mono', 'Inter', Arial, sans-serif;
+      background: #161a1c;
+      color: #39ff14;
+      overflow-x: hidden;
+      overflow-y: hidden;
+    }
+    body::before {
+      content:"";
+      position:fixed; left:0; top:0; width:100vw; height:100vh; z-index:0;
+      background: radial-gradient(circle at 63% 39%, #39ff14 0%, #2e67bc 28%, #161a1c 100%);
+      opacity: .13; pointer-events: none;
+    }
+    .glass-shell {
+      position: absolute;
+      left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      width: 97vw; max-width: 480px; min-width: 320px;
+      height: 96vh; max-height: 838px; min-height: 410px;
+      margin: 0 auto;
+      background: rgba(20,32,49,0.98);
+      box-shadow: 0 18px 60px #39ff1440, 0 5px 42px #161a1c40;
+      border-radius: 24px;
+      border: 2.3px solid #39ff1485;
+      backdrop-filter: blur(8px);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      overflow: hidden;
+      z-index: 2;
+    }
+    .chat-header {
+      display: flex;
+      align-items: center;
+      gap: 1.14em;
+      border-bottom: 1.7px solid #39ff1435;
+      background: linear-gradient(96deg, #181c39 54%, #122a13 100%);
+      padding: 1.32em 1.8em 1.1em 1.7em;
+    }
+    .avatar-holder {
+      width: 53px; height: 53px; border-radius: 50%;
+      background: linear-gradient(144deg,#39ff14 60%,#3ecb93 100%);
+      box-shadow: 0 2px 14px #39ff1417;
+      display: flex; align-items: center; justify-content: center; position: relative; overflow:hidden;
+    }
+    .avatar-init {
+      font-size: 2em; font-weight: 800; color: #222;
+      font-family: inherit;
+      letter-spacing: 1px;
+      background: linear-gradient(120deg, #39ff14 58%, #122 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .chat-header h1 {
+      margin: 0 0 0.12em 0;
+      font-size: 1.23em;
+      font-weight: 700;
+      color: #39ff14;
+      letter-spacing: 0.09em;
+      display: flex;
+      align-items: center;
+      gap: 0.38em;
+    }
+    .desc-line {
+      margin: 0; font-size: 1.04em; color: #85fdda;
+      font-weight: 500; letter-spacing: 0.075em;
+    }
+
+    .chatbox {
+      flex: 1 1 0;
+      display: flex; flex-direction: column;
+      padding: 2.1em 1.55em 1em 1.6em;
+      overflow-y: auto;
+      gap: 1.22em;
+      background: none;
+      min-height: 0;
+      outline: none;
+      transition: padding 0.3s;
+      scroll-behavior: smooth;
+    }
+
+    .bubble {
+      max-width: 80%;
+      min-width: 44px;
+      padding: 1.09em 1.39em;
+      border-radius: 16px 16px 12px 8px/21px 21px 14px 11px;
+      font-size: 1.07em; font-weight: 600;
+      background: #192839;
+      color: #aefcdb;
+      align-self: flex-start;
+      box-shadow: 0 2px 13px #39ff144a;
+      border: 1.55px solid #39ff1485;
+      position: relative; animation: appear 0.23s;
+      transition: background 0.5s, color 0.5s; word-break: break-word;
+    }
+    .bubble.user {
+      align-self: flex-end;
+      background: linear-gradient(121deg, #2e67bc 56%, #39ff14 120%);
+      color: #11141a;
+      border: 1.1px solid #2a88b0;
+      border-radius: 16px 16px 8px 16px/21px 21px 12px 21px;
+      font-weight: 700;
+    }
+    @keyframes appear {
+      from { opacity: 0; transform: translateY(28px) scale(0.96);}
+      to { opacity: 1; transform: none;}
+    }
+
+    /* Chat form styling */
+    .chat-form-area {
+      display: flex; gap: 0.9em;
+      padding: 1.21em 1.6em 1.17em 1.65em;
+      background: #131926;
+      border-top: 1.8px solid #39ff1494;
+      box-shadow: 0 -6px 26px #0005;
+      position: relative;
+    }
+    #chat-input {
+      flex: 1 1 0;
+      font-size: 1.11em;
+      border-radius: 13px;
+      border: 1.58px solid #39ff1496;
+      padding: 1em 1.08em;
+      background: #1c2a2e;
+      color: #f0fff8;
+      outline: none;
+      font-weight: 550;
+      transition: border 0.24s, box-shadow 0.25s;
+      box-shadow: 0 1px 7px #39ff1422;
+    }
+    #chat-input:focus {
+      border: 1.8px solid #39ff14;
+      background: #122f16;
+      box-shadow: 0 2px 21px #0eb9fa40;
+    }
+    .chat-btn {
+      background: linear-gradient(90deg, #39ff14 45%, #00ffd8 100%);
+      color: #191f29; border: none;
+      border-radius: 13px; padding: 0.97em 1.46em;
+      font-size: 1.14em; font-weight: 700; cursor: pointer;
+      box-shadow: 0 2px 13px #39ff1485; outline: none;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.22s, box-shadow 0.22s;
+    }
+    .chat-btn:hover, .chat-btn:focus {
+      background: linear-gradient(101deg,#39ff14 27%, #00ffd8 120%);
+      color: #031325; box-shadow: 0 7px 32px #39ff1475;
+    }
+
+    /* Nav Bar Styling */
+    .cyber-navbar {
+      position: fixed;
+      bottom: 0; left: 0; width: 100vw; height: 55px;
+      background: linear-gradient(90deg,#1c2329 0%,#181c39 100%);
+      display: flex; align-items: center; justify-content: space-around;
+      box-shadow: 0 -7px 24px #39ff1429; z-index: 10;
+      font-size: 1em;
+    }
+    .cyber-nav-icon {
+      color: #39ff14; font-size: 1.12em;
+      background: #161f19; padding: 10px 17px; border-radius: 13px;
+      margin: 0 7px; cursor: pointer; font-family: inherit;
+      font-weight: 600; border: none; box-shadow: 0 2px 16px #39ff1450;
+      transition: background 0.14s, color 0.17s;
+    }
+    .cyber-nav-icon:active, .cyber-nav-icon:hover {
+      background: #39ff1485; color: #161a1c;
+    }
+
+    /* Responsive - mobile */
+    @media (max-width: 700px) {
+      .glass-shell {
+        width: 99vw; height: 100vh; min-width:0; max-width:100vw; max-height:100vh; border-radius:0; margin:0; }
+      header { font-size: 1.07rem; padding-left:0.62em; padding-right:0.62em; }
+      .chatbox { padding: 0.85em 0.36em 0.9em 0.42em; }
+      .chat-form-area { padding-left:0.3em; padding-right:0.3em; }
+      .desc-line { font-size: 1.01em;}
+      .cyber-navbar { height: 61px; font-size: 1.03em;}
+    }
+    @media (min-width: 1200px) {
+      .glass-shell { max-width:540px; }
+    }
+    ::-webkit-scrollbar { width: 7px; background: transparent;}
+    ::-webkit-scrollbar-thumb { background: #252a41; border-radius: 13px;}
+    ::-webkit-scrollbar-track { background: transparent; }
   </style>
 </head>
 <body>
-  <div class="main-container">
-    <section class="intro-panel" aria-label="About This Website">
-      <div class="site-title">Gatekeeper</div>
-      <div class="intro-desc">
-        Welcome to <b>Gatekeeper</b>, a high-security cyber lab interface for ethical hacking, CTFs, and learning advanced cybersecurity in a responsible, legal, and supervised environment.<br>
-        All tools, guides, and chat assistants are strictly for those with verified access.
+  <div class="glass-shell">
+    <div class="chat-header" aria-label="Chatbot header">
+      <div class="avatar-holder"><span class="avatar-init">G</span></div>
+      <div>
+        <h1>Gatekeeper Bot</h1>
+        <div class="desc-line">Cybersecure assistant chat</div>
       </div>
-      <div class="access-info">
-        <span style="font-weight:bold; color:#00ffd8;">Why is access restricted?</span><br />
-        Content here is highly sensitive. Only approved students, researchers, or invited experts can access the
-        system.<br>
-        <span style="color:#39ff14; font-weight:600;">How to get an access code:</span>
-        <ul style="padding-left:1.1em; text-align:left; color:#82ffd0; margin-top:.38em; margin-bottom:.1em;">
-          <li>Contact your instructor or team lead directly.</li>
-          <li>Submit a validated identity proof via secure channel.</li>
-          <li>Participate in official CTFs, hackathons, or training events.</li>
-        </ul>
-        Codes are changed frequently for security. If you do not have access, reach out below.
-      </div>
-      <button class="btn-contact"
-        onclick="window.open('https://instagram.com/yourusername', '_blank')">
-        Contact Security Admin
+    </div>
+    <div class="chatbox" id="chat-messages" aria-label="Chat message area">
+      <!-- Chat bubbles go here -->
+      <div class="bubble">Welcome. Type your command below.</div>
+    </div>
+    <form class="chat-form-area" id="chat-form" autocomplete="off" aria-label="Send chat">
+      <input id="chat-input" type="text" placeholder="Type your message..." autocomplete="off" />
+      <button type="submit" class="chat-btn" aria-label="Send">
+        <span style="font-size:1.17em;">&#10148;</span>
       </button>
-    </section>
-    <form class="entry-panel" id="code-access-form" autocomplete="off" aria-label="Access Code Entry">
-      <h2>Enter Access Code</h2>
-      <label for="access-code" class="label-access">Access Code</label>
-      <input type="text" id="access-code" class="input-cyber" autocomplete="off" required maxlength="48"
-        autocapitalize="off" inputmode="text" aria-label="Access Code">
-      <button type="submit" class="unlock-btn" id="unlock-btn" aria-label="Unlock Access">Unlock</button>
-      <div class="error-message" id="error-msg" aria-live="polite"></div>
     </form>
   </div>
+  <div class="cyber-navbar" aria-label="Navigation bar">
+    <button class="cyber-nav-icon">Home</button>
+    <button class="cyber-nav-icon">Hack</button>
+    <button class="cyber-nav-icon">CTF</button>
+    <button class="cyber-nav-icon">Profile</button>
+  </div>
   <script>
-    const codeInput = document.getElementById('access-code');
-    const codeForm = document.getElementById('code-access-form');
-    const errorMsg = document.getElementById('error-msg');
-    const unlockBtn = document.getElementById('unlock-btn');
-
-    codeForm.onsubmit = async function (e) {
+    // Example chat handler (simulated for demo)
+    const form = document.getElementById('chat-form');
+    const chatInput = document.getElementById('chat-input');
+    const chatMessages = document.getElementById('chat-messages');
+    form.onsubmit = e => {
       e.preventDefault();
-      errorMsg.textContent = '';
-      unlockBtn.disabled = true;
-      unlockBtn.textContent = "Validating...";
-      const code = codeInput.value.trim();
-      try {
-        const res = await fetch('/.netlify/functions/verify-access', {
-          method: 'POST',
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ code })
-        });
-        const data = await res.json();
-        if (data.success) {
-          localStorage.setItem("hasAccess", "true");
-          document.body.style.background = "#10160c";
-          setTimeout(() => { window.location.href = "/chat.html"; }, 560);
-        } else {
-          errorMsg.textContent = data.error || "Invalid or expired code. Contact admin for access.";
-          codeInput.value = "";
-          codeInput.focus();
-        }
-      } catch (err) {
-        errorMsg.textContent = "Network error. Try again.";
-      }
-      unlockBtn.disabled = false;
-      unlockBtn.textContent = "Unlock";
+      const text = chatInput.value.trim();
+      if (!text) return;
+      const userBubble = document.createElement('div');
+      userBubble.className = "bubble user";
+      userBubble.innerText = text;
+      chatMessages.appendChild(userBubble);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+      chatInput.value = "";
+      setTimeout(() => {
+        const botBubble = document.createElement('div');
+        botBubble.className = "bubble";
+        botBubble.innerText = "Bot reply: " + text;
+        chatMessages.appendChild(botBubble);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }, 700);
     };
-    document.addEventListener('DOMContentLoaded', () => { codeInput.focus(); });
-    codeInput.addEventListener('keydown', e => { if (e.key === "Enter") unlockBtn.click(); });
   </script>
 </body>
 </html>
