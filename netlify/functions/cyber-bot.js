@@ -28,11 +28,13 @@ exports.handler = async function(event) {
   );
 
   if (!response.ok) {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ reply: "Bot error: Could not reach Gemini API." })
-    };
-  }
+  const errorText = await response.text();
+  return {
+    statusCode: 500,
+    body: JSON.stringify({ reply: "Bot error: Could not reach Gemini API. " + errorText })
+  };
+}
+
 
   const data = await response.json();
 
