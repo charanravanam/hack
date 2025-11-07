@@ -6,7 +6,7 @@ exports.handler = async function(event, context) {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
   const { code } = JSON.parse(event.body || '{}');
-  const validCodes = ["SECRET-ACCESS-2025", "VIP-INVITE-983"]; // put in env for security!
+  const validCodes = [0987]; // put in env for security!
   if (validCodes.includes((code || '').trim())) {
     return {
       statusCode: 200,
