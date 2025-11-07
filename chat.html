@@ -60,9 +60,8 @@
       width: 100vw;
       margin: 0 auto;
       box-sizing: border-box;
-      /* height fills viewport minus navbar and input bar */
       height: calc(100vh - var(--navbar-height) - var(--inputbar-height));
-      margin-top: var(--navbar-height); /* ensure not under navbar */
+      margin-top: var(--navbar-height);
       background: rgba(0,0,0,0.07);
       overflow: hidden;
       position: relative;
@@ -118,7 +117,7 @@
       animation: appear 0.18s;
       transition: background 0.2s;
     }
-    .msg.user { margin-left:auto;background:linear-gradient(118deg,#2e67bc 63%,#39ff14 120%);color:#131b1a;border:1.2px solid #39ff1490;}
+    .msg user { margin-left:auto;background:linear-gradient(118deg,#2e67bc 63%,#39ff14 120%);color:#131b1a;border:1.2px solid #39ff1490;}
     .msg.bot { background: #1c2c19;color: #aefcdb;border:1.2px solid #39ff1450;}
     @keyframes appear{from{opacity:.18;transform:translateY(25px) scale(0.97);}to{opacity:1;transform:none;}}
     .timestamp { font-size: 11px; margin-top: 7px; color: #82ffd0; }
@@ -224,28 +223,36 @@ const chatMessages = document.getElementById('chat-messages');
 const chatForm = document.getElementById('chat-form');
 const chatInput = document.getElementById('chat-input');
 
+// Provides correct readable formatting:
 function escapeHtml(s){
   return s.replace(/&/g,"&amp;")
           .replace(/</g,"&lt;")
           .replace(/>/g,"&gt;");
 }
 function addBubble(text, who="bot"){
-  // Convert Markdown and preserve line breaks for readability
-  // Replace double newlines with <br><br>
-  let html = escapeHtml(text)
-    .replace(/\n{3,}/g, "\n\n") // Normalize any 3+ newlines to 2
-    .replace(/\n\n/g, "<br><br>")
-    .replace(/\n/g, "<br>");
-  // Optionally, render simple code blocks (```
-  html = html.replace(/```([\s\S]+?)```
+  // Format code blocks first
+  let html = text.replace(/``````/g, function(match, code){
     return '<pre style="background:#222e39;color:#eaffee;padding:10px 12px;border-radius:8px;margin:8px 0 5px 0;"><code>'+escapeHtml(code)+'</code></pre>';
   });
-  // Optionally, inline code (`code`)
+  // Replace inline code
   html = html.replace(/`([^`]+)`/g, '<code style="background:#191e28;color:#39ff14;padding:2px 6px;border-radius:7px;">$1</code>');
+  // Escape the rest, but don't touch code/pre!
+  html = html.replace(/&/g,"&amp;")
+             .replace(/</g,"&lt;")
+             .replace(/>/g,"&gt;");
+  // Restore code/pre tags if they got escaped (rare, but safe)
+  html = html.replace(/&lt;pre([\s\S]+?)&gt;/g,'<pre$1>')
+             .replace(/&lt;\/pre&gt;/g,'</pre>')
+             .replace(/&lt;code([\s\S]+?)&gt;/g,'<code$1>')
+             .replace(/&lt;\/code&gt;/g,'</code>');
+  // Convert double and single line breaks
+  html = html.replace(/\n{3,}/g, "\n\n")
+             .replace(/\n\n/g, "<br><br>")
+             .replace(/\n/g, "<br>");
   const el = document.createElement("div");
   el.className = "msg " + (who === "user" ? "user" : "bot");
   el.innerHTML = `<div>${html}</div>
-                  <div class="timestamp">${who === 'user' ? 'You':'Cyber Bot'} -  ${new Date().toLocaleTimeString()}</div>`;
+                  <div class="timestamp">${who === 'user' ? 'You':'Cyber Bot'} • ${new Date().toLocaleTimeString()}</div>`;
   chatMessages.appendChild(el);
   chatMessages.scrollTop = chatMessages.scrollHeight;
 }
