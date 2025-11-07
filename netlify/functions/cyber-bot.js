@@ -5,14 +5,15 @@ exports.handler = async function(event) {
   const { message } = JSON.parse(event.body || '{}');
   const apiKey = process.env.GEMINI_API_KEY;
 
-  // Use a supported model from /models?key=YOUR_KEY (e.g. "gemini-1.0-pro")
-  const model = 'gemini-1.0-pro'; // Replace if your account lists a slightly different model ID
+  // Use the exact model name from ListModels (MUST start with "models/")
+  const model = "models/gemini-2.5-pro";
 
-  const systemPrompt = `You are a cybersecurity AI assistant...`;
+  // Persona/message for cybersecurity bot
+  const systemPrompt = `You are a cybersecurity AI assistant inside the Gatekeeper chat app. Never assist with illegal, dangerous, or offensive actions. Give accurate, ethical advice about defensive tactics, CTF hints, OSINT, secure coding, ethical hacking, and digital forensics. Never provide real attack payloads or steps for unauthorized access.`;
 
   try {
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/${model}:generateContent?key=${apiKey}`,
       {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
