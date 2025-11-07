@@ -5,11 +5,14 @@ exports.handler = async function(event) {
   const { message } = JSON.parse(event.body || '{}');
   const apiKey = process.env.GEMINI_API_KEY;
 
+  // Use a supported model from /models?key=YOUR_KEY (e.g. "gemini-1.0-pro")
+  const model = 'gemini-1.0-pro'; // Replace if your account lists a slightly different model ID
+
   const systemPrompt = `You are a cybersecurity AI assistant...`;
 
   try {
     const response = await fetch(
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=' + apiKey,
+      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
       {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
@@ -38,7 +41,6 @@ exports.handler = async function(event) {
       body: JSON.stringify({ reply })
     };
   } catch (err) {
-    // Return the error for frontend to display
     return {
       statusCode: 500,
       body: JSON.stringify({ reply: err.message })
