@@ -110,14 +110,47 @@ async function fetchAIReply(input) {
 }
 
 // ===== Chat Functions =====
-const chatMessages = document.getElementById("chat-messages");
-function addMessage(msg, user = false) {
-    const m = document.createElement("div");
-    m.className = "msg " + (user ? "user" : "bot");
-    m.innerText = (user ? "You > " : "AI > ") + msg;
-    chatMessages.appendChild(m);
+const chatMessages = document.getElementById('chat-messages');
+const chatInput = document.getElementById('chat-input');
+const chatForm = document.getElementById('chat-form');
+
+chatForm.onsubmit = async function(e) {
+    e.preventDefault();
+    const msg = chatInput.value.trim();
+    if (!msg) return;
+
+    // Add user message to chat
+    const userBubble = document.createElement('div');
+    userBubble.className = "msg user";
+    userBubble.textContent = msg;
+    chatMessages.appendChild(userBubble);
+
     chatMessages.scrollTop = chatMessages.scrollHeight;
-}
+    chatInput.value = "";
+
+    // Add typing indicator (optional)
+    const botBubble = document.createElement('div');
+    botBubble.className = "msg bot";
+    botBubble.textContent = "Bot is typing...";
+    chatMessages.appendChild(botBubble);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    // Gemini API call as before...
+    try {
+      const res = await fetch('/.netlify/functions/cyber-bot', {
+        method: 'POST',
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ message: msg })
+      });
+      const data = await res.json();
+      // Replace typing with actual reply
+      botBubble.textContent = data.reply || "Bot error: no reply.";
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    } catch (err) {
+      botBubble.textContent = "Bot error: API unreachable.";
+    }
+};
+
 
 // ===== Chat Submission (AI only, all the time) =====
 const form = document.getElementById('chat-form');
