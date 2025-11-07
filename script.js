@@ -120,7 +120,12 @@ function addMessage(msg, user = false) {
 }
 
 // ===== Chat Submission (AI only, all the time) =====
-const chatForm = document.getElementById("chat-form");
+const form = document.getElementById('chat-form');
+form.onsubmit = function(e) {
+  e.preventDefault();
+  sendMsg(); // your send logic
+};
+
 const chatInput = document.getElementById("chat-input");
 chatForm.addEventListener("submit", async (e) => {
     e.preventDefault();
