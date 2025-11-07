@@ -6,7 +6,8 @@ exports.handler = async function(event) {
   const apiKey = process.env.GEMINI_API_KEY;
 
   // Use the exact model name from ListModels (MUST start with "models/")
-  const model = "models/gemini-2.5-pro";
+  const model = "models/gemini-2.5-flash"; // or pick another from your ListModels
+
 
   // Persona/message for cybersecurity bot
   const systemPrompt = `You are a cybersecurity AI assistant inside the Gatekeeper chat app. Never assist with illegal, dangerous, or offensive actions. Give accurate, ethical advice about defensive tactics, CTF hints, OSINT, secure coding, ethical hacking, and digital forensics. Never provide real attack payloads or steps for unauthorized access.`;
