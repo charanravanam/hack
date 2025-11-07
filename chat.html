@@ -230,13 +230,26 @@ function escapeHtml(s){
           .replace(/>/g,"&gt;");
 }
 function addBubble(text, who="bot"){
+  // Convert Markdown and preserve line breaks for readability
+  // Replace double newlines with <br><br>
+  let html = escapeHtml(text)
+    .replace(/\n{3,}/g, "\n\n") // Normalize any 3+ newlines to 2
+    .replace(/\n\n/g, "<br><br>")
+    .replace(/\n/g, "<br>");
+  // Optionally, render simple code blocks (```
+  html = html.replace(/```([\s\S]+?)```
+    return '<pre style="background:#222e39;color:#eaffee;padding:10px 12px;border-radius:8px;margin:8px 0 5px 0;"><code>'+escapeHtml(code)+'</code></pre>';
+  });
+  // Optionally, inline code (`code`)
+  html = html.replace(/`([^`]+)`/g, '<code style="background:#191e28;color:#39ff14;padding:2px 6px;border-radius:7px;">$1</code>');
   const el = document.createElement("div");
   el.className = "msg " + (who === "user" ? "user" : "bot");
-  el.innerHTML = `<div>${escapeHtml(text)}</div>
-                  <div class="timestamp">${who === 'user' ? 'You':'Cyber Bot'} • ${new Date().toLocaleTimeString()}</div>`;
+  el.innerHTML = `<div>${html}</div>
+                  <div class="timestamp">${who === 'user' ? 'You':'Cyber Bot'} -  ${new Date().toLocaleTimeString()}</div>`;
   chatMessages.appendChild(el);
   chatMessages.scrollTop = chatMessages.scrollHeight;
 }
+
 function showTyping(){
   const typing = document.createElement("div");
   typing.className = "msg bot";
