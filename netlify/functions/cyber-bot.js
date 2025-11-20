@@ -31,7 +31,7 @@ exports.handler = async function(event) {
     );
     if (!response.ok) {
       const errorText = await response.text();
-      throw new Error("Gemini API returned error: " + errorText);
+      throw new Error("HackGPT returned error: " + errorText);
     }
     const data = await response.json();
     let reply = "Sorry, AI did not reply.";
